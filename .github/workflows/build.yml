@@ -24,14 +24,6 @@ jobs:
     - name: Build docs files
       run: npm run build-docs
 
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v9
-      with:
-        author_name: Creode
-        author_email: dev@creode.co.uk
-        message: 'Updated Documentation'
-        add: './docs'
-
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v3.0.1
       with:
