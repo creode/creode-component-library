@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 2.x
-      - feature/component_rewrite # Remove after testing...
 
 jobs:
   build-and-deploy:
