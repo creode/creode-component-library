@@ -30,8 +30,7 @@ export default class Header {
 	breakpoint = 760;
 	menuExpanded = false;
 	elements = {};
-
-  // Tests the order of components.
+	
 	constructor(wrapper) {
 		this.loadElements(wrapper);
 		if(this.elements.menu.section.length) {
