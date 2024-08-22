@@ -2,4 +2,7 @@ node_modules
 package-lock.json
 
 # DOCS
-docs/header.md
+docs/*
+!docs/.nojekyll
+!docs/index.html
+!docs/README.md
