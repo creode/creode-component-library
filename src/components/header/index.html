@@ -1,41 +1,44 @@
 <header class="header__wrapper">
-	<div class="header__inner">
-		<div class="header__sections">
-			<div class="header__section header__section--logo">
-				<div class="header__logo-wrapper">
-					<a href="/">
-						<img src="https://placehold.co/600x400/svg?text=Logo" alt="WordPress">
-					</a>
-				</div>
-			</div>
-			<div class="header__section header__section--general">
-				<p>Some additional copy/icons</p>
-			</div>
-			<div class="header__section header__section--menu header__section--desktop-menu">
-				<div class="header__menu-toggle-wrapper" hidden="" aria-hidden="">
-					<input id="header-menu-toggle" type="checkbox" class="header__menu-toggle" hidden="" aria-hidden="">
-					<label for="header-menu-toggle" class="header__menu-toggle-label" aria-haspopup="menu" :aria-expanded="menuExpanded" aria-controls="header-menu">
-						Open Menu
-					</label>
-				</div>
-				<div id="header-menu" class="header__menu-wrapper">
-					<nav class="header__menu-inner">
-						<div class="header__menu-close-button-wrapper" hidden="" aria-hidden="">
-							<button type="button" class="header__menu-close-button" tabindex="0">
-								Close menu
-							</button>
-						</div>
-						<ul id="menu-main" class="menu">
-							<li id="menu-item-9" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-9">
-								<a href="/" aria-current="page" tabindex="0">Home</a>
-							</li>
-							<li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10">
-								<a href="/sample-page/" tabindex="0">Sample Page</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="header__inner">
+        <div class="header__sections">
+            <div class="header__section header__section--logo">
+                <div class="header__logo-wrapper">
+                    <a href="/">
+                        <img
+                            src="https://placehold.co/600x400/svg?text=Logo"
+                            alt="Site logo"
+                        />
+                    </a>
+                </div>
+            </div>
+            <div class="header__section header__section--general">
+                <p>Some additional copy/icons</p>
+            </div>
+            <div class="header__section header__section--menu header__section--desktop-menu">
+                <div class="header__menu-toggle-wrapper" hidden aria-hidden>
+                    <input id="header-menu-toggle" type="checkbox" class="header__menu-toggle" hidden aria-hidden>
+                    <label for="header-menu-toggle" class="header__menu-toggle-label" aria-haspopup="menu" :aria-expanded="menuExpanded" aria-controls="header-menu">
+                        Open Menu
+                    </label>
+                </div>
+                <div id="header-menu" class="header__menu-wrapper">
+                    <nav class="header__menu-inner">
+                        <div class="header__menu-close-button-wrapper" hidden aria-hidden>
+                            <button type="button" class="header__menu-close-button">
+                                Close menu
+                            </button>
+                        </div>
+                        <ul id="menu-main" class="menu">
+                            <li id="menu-item-9" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-9">
+                                <a href="/" aria-current="page">Home</a>
+                            </li>
+                            <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10">
+                                <a href="/sample-page">Sample Page</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
