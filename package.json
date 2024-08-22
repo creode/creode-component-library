@@ -61,9 +61,7 @@
   "main": "index.js",
   "name": "creode-components",
   "scripts": {
-    "build-storybook": "storybook build",
-    "storybook": "storybook dev -p 6006",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-docs": "node ./build/doc-builder.cjs"
   },
   "type": "module",
   "version": "1.11.0"
