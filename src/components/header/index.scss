@@ -63,11 +63,11 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 0 $space-horizontal * -0.5;
+		margin: 0 calc($space-horizontal * -0.5);
 	}
 
 	.header__section {
-		padding: 0 $space-horizontal * 0.5 $space-vertical;
+		padding: 0 calc($space-horizontal * 0.5) $space-vertical;
 	}
 
 	.header__section--menu {
@@ -75,10 +75,10 @@
 	}
 
 	.header__section--general {
-		padding-bottom: $space-vertical * 0.5;
+		padding-bottom: calc($space-vertical * 0.5);
 
 		p {
-			margin-bottom: $space-vertical * 0.5;
+			margin-bottom: calc($space-vertical * 0.5);
 		}
 	}
 
@@ -94,6 +94,7 @@
 	.header__menu-toggle-wrapper {
 		position: relative;
 		width: 40px;
+		margin: 0 0 $space-vertical;
 
 		&[hidden],
 		&[aria-hidden] {
@@ -222,13 +223,13 @@
 		& > ul {
 			display: flex;
 			flex-wrap: wrap;
-			margin: 0 $space-horizontal * -0.5;
+			margin: 0 calc($space-horizontal * -0.5);
 			padding: 0;
 			list-style-type: none;
 
 			& > li {
 				margin: 0;
-				padding: 0 $space-horizontal * 0.5 $space-vertical;
+				padding: 0 calc($space-horizontal * 0.5) $space-vertical;
 
 				.header__section--menu:not(.header__section--desktop-menu) & {
 					width: 100%;
