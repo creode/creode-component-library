@@ -47,7 +47,6 @@
 }
 
 @mixin render() {
-
 	.header__wrapper {
 		padding: 0 $space-horizontal;
 		background-color: $background-color;
@@ -241,11 +240,10 @@
 }
 
 @mixin wordpresss_editor() {
-
-	.header__sections > .block-editor-inner-blocks {
+	.header__sections > .acf-innerblocks-container {
 		width: 100%;
 
-		& > .block-editor-block-list__layout {
+		&.block-editor-block-list__layout {
 			@extend .header__sections;
 
 			& > .wp-block {
@@ -253,5 +251,4 @@
 			}
 		}
 	}
-
 }
