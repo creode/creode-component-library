@@ -3,7 +3,7 @@ const path = require('path');
 
 const srcDir = path.join(__dirname, '../', 'src', 'components');
 const outputDir = path.join(__dirname, '../', 'docs');
-const essentialFiles = ['.nojekyll', 'index.html', 'README.md', 'CNAME'];
+const essentialFiles = ['.nojekyll', 'index.html', 'README.md', 'CNAME', 'assets'];
 
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir);
