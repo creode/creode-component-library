@@ -84,12 +84,30 @@ function generateComponentList(components) {
     const componentName = component.name;
     content += `- [${componentName}](./${componentName}.md)\n`;
 
+    const fileLinks = [];
+    const exampleLinks = [];
+
     component.files.forEach(file => {
       const relativePath = path.relative(srcDir, file.path);
       if (!relativePath.endsWith('README.md')) {
         const id = relativePath.replace(/[\/.\-]/g, '').toLowerCase();
-        content += `  - [${relativePath}](./${componentName}.md#${id})\n`;
+        const link = `  - [${relativePath}](./${componentName}.md#${id})\n`;
+        if (file.ext === '.md' && file.path.includes('examples')) {
+          exampleLinks.push(link);
+        } else {
+          fileLinks.push(link);
+        }
       }
+    });
+
+    // Add the regular file links first
+    fileLinks.forEach(link => {
+      content += link;
+    });
+
+    // Add the example links at the bottom
+    exampleLinks.forEach(link => {
+      content += link;
     });
   });
 
