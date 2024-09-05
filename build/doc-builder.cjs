@@ -22,12 +22,15 @@ if (!fs.existsSync(outputDir)) {
 }
 
 function createMarkdownContent(relativePath, content, ext) {
+  const id = relativePath.replace(/[\/.\-]/g, '').toLowerCase();
   if (ext === '.html') {
-    return `\n### ${relativePath}\n\`\`\`html\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`html\n${content}\n\`\`\`\n`;
   } else if (ext === '.js') {
-    return `\n### ${relativePath}\n\`\`\`javascript\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`javascript\n${content}\n\`\`\`\n`;
   } else if (ext === '.scss') {
-    return `\n### ${relativePath}\n\`\`\`scss\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`scss\n${content}\n\`\`\`\n`;
+  } else if (ext === '.md') {
+    return `\n### ${relativePath}\n<a id="${id}"></a>\n${content}\n`;
   }
   return '';
 }
@@ -44,13 +47,32 @@ function generateComponentMarkdown(componentName, componentFiles) {
 
   // Add a heading for file snippets
   content += `\n## File Snippets\n`;
+  const exampleContentArr = [];
 
   componentFiles.forEach(file => {
     const relativePath = path.relative(srcDir, file.path);
     const ext = path.extname(file.path);
     const fileContent = fs.readFileSync(file.path, 'utf-8');
-    content += createMarkdownContent(relativePath, fileContent, ext);
+
+    if (file.path === readmePath) {
+      // Skip adding README.md again
+      return;
+    }
+
+    if (file.path.includes('examples')) {
+      exampleContentArr.push(createMarkdownContent(relativePath, fileContent, ext));
+    } else {
+      content += createMarkdownContent(relativePath, fileContent, ext);
+    }
   });
+
+  // Add examples if any
+  if (exampleContentArr.length > 0) {
+    content += `\n## Examples\n`;
+    exampleContentArr.forEach(example => {
+      content += example;
+    });
+  }
 
   return content;
 }
@@ -64,8 +86,10 @@ function generateComponentList(components) {
 
     component.files.forEach(file => {
       const relativePath = path.relative(srcDir, file.path);
-      const id = relativePath.replace(/\//g, '').replace(/\./g, '').replace(/-/g, '').toLowerCase();
-      content += `  - [${relativePath}](./${componentName}.md#${id})\n`;
+      if (!relativePath.endsWith('README.md')) {
+        const id = relativePath.replace(/[\/.\-]/g, '').toLowerCase();
+        content += `  - [${relativePath}](./${componentName}.md#${id})\n`;
+      }
     });
   });
 
@@ -96,10 +120,21 @@ function readDirectory(dir) {
       const fileStat = fs.statSync(filePath);
 
       if (fileStat.isDirectory()) {
-        traverseDir(filePath, rootDir);
+        if (file === 'examples') {
+          const exampleFiles = fs.readdirSync(filePath);
+          exampleFiles.forEach(exampleFile => {
+            const exampleFilePath = path.join(filePath, exampleFile);
+            const exampleFileStat = fs.statSync(exampleFilePath);
+            if (exampleFileStat.isFile() && path.extname(exampleFile) === '.md') {
+              componentFiles.push({ path: exampleFilePath, ext: '.md' });
+            }
+          });
+        } else {
+          traverseDir(filePath, rootDir);
+        }
       } else if (fileStat.isFile()) {
         const ext = path.extname(filePath);
-        if (['.html', '.js', '.scss'].includes(ext)) {
+        if (['.html', '.js', '.scss', '.md'].includes(ext)) {
           componentFiles.push({ path: filePath, ext });
         }
       }
