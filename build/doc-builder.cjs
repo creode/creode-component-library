@@ -22,15 +22,15 @@ if (!fs.existsSync(outputDir)) {
 }
 
 function createMarkdownContent(relativePath, content, ext) {
-  const id = relativePath.replace(/[\/.\-]/g, '').toLowerCase();
+  const formattedId = relativePath.replace(/[\s\/\\]+/g, '').replace(/\./g, '').toLowerCase();
   if (ext === '.html') {
-    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`html\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n\`\`\`html\n${content}\n\`\`\`\n`;
   } else if (ext === '.js') {
-    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`javascript\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n\`\`\`javascript\n${content}\n\`\`\`\n`;
   } else if (ext === '.scss') {
-    return `\n### ${relativePath}\n<a id="${id}"></a>\n\`\`\`scss\n${content}\n\`\`\`\n`;
+    return `\n### ${relativePath}\n\`\`\`scss\n${content}\n\`\`\`\n`;
   } else if (ext === '.md') {
-    return `\n### ${relativePath}\n<a id="${id}"></a>\n${content}\n`;
+    return `\n### ${relativePath}\n${content}\n`;
   }
   return '';
 }
@@ -38,15 +38,13 @@ function createMarkdownContent(relativePath, content, ext) {
 function generateComponentMarkdown(componentName, componentFiles) {
   let content = `# ${componentName}\n`;
 
-  // Check if there's a README.md in the component folder and include its content under the title
   const readmePath = path.join(srcDir, componentName, 'README.md');
   if (fs.existsSync(readmePath)) {
     const readmeContent = fs.readFileSync(readmePath, 'utf-8');
     content += `${readmeContent}\n`;
   }
 
-  // Add a heading for file snippets
-  content += `\n## File Snippets\n`;
+  let hasFileSnippets = false;
   const exampleContentArr = [];
 
   componentFiles.forEach(file => {
@@ -55,18 +53,20 @@ function generateComponentMarkdown(componentName, componentFiles) {
     const fileContent = fs.readFileSync(file.path, 'utf-8');
 
     if (file.path === readmePath) {
-      // Skip adding README.md again
       return;
     }
 
     if (file.path.includes('examples')) {
       exampleContentArr.push(createMarkdownContent(relativePath, fileContent, ext));
     } else {
+      if (!hasFileSnippets) {
+        content += `\n## File Snippets\n`;
+        hasFileSnippets = true;
+      }
       content += createMarkdownContent(relativePath, fileContent, ext);
     }
   });
 
-  // Add examples if any
   if (exampleContentArr.length > 0) {
     content += `\n## Examples\n`;
     exampleContentArr.forEach(example => {
@@ -82,45 +82,25 @@ function generateComponentList(components) {
 
   components.forEach(component => {
     const componentName = component.name;
-    content += `- [${componentName}](./${componentName}.md)\n`;
+    content += `- [${componentName}](./${componentName}.md?id=${componentName.toLowerCase()})\n`;
 
-    const fileLinks = [];
     const exampleLinks = [];
-
     component.files.forEach(file => {
       const relativePath = path.relative(srcDir, file.path);
       if (!relativePath.endsWith('README.md')) {
-        const id = relativePath.replace(/[\/.\-]/g, '').toLowerCase();
-        const link = `  - [${relativePath}](./${componentName}.md#${id})\n`;
-        if (file.ext === '.md' && file.path.includes('examples')) {
-          exampleLinks.push(link);
+        const formattedId = relativePath.replace(/[\s\/\\]+/g, '').replace(/\./g, '').toLowerCase();
+        if (relativePath.includes('examples')) {
+          exampleLinks.push(`  - [${relativePath}](./${componentName}.md?id=${formattedId})\n`);
         } else {
-          fileLinks.push(link);
+          content += `  - [${relativePath}](./${componentName}.md?id=${formattedId})\n`;
         }
       }
     });
 
-    // Add the regular file links first
-    fileLinks.forEach(link => {
-      content += link;
-    });
-
-    // Add the example links at the bottom
+    // Append example links at the end
     exampleLinks.forEach(link => {
       content += link;
     });
-  });
-
-  return content;
-}
-
-function generateSidebarMarkdown(components) {
-  let content = '* [Home](/)\n';
-  content += '* Components\n';
-
-  components.forEach(component => {
-    const componentName = component.name;
-    content += `    * [${componentName}](./${componentName}.md)\n`;
   });
 
   return content;
@@ -189,7 +169,11 @@ components.forEach(component => {
 });
 
 // Generate the Docsify sidebar file
-const sidebarMarkdown = generateSidebarMarkdown(components);
+let sidebarMarkdown = '* [Home](/)\n* Components\n';
+components.forEach(component => {
+  const componentName = component.name;
+  sidebarMarkdown += `  * [${componentName}](./${componentName}.md)\n`;
+});
 fs.writeFileSync(path.join(outputDir, '_sidebar.md'), sidebarMarkdown);
 
 // Update the README.md with a component list using placeholder tags

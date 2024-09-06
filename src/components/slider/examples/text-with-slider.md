@@ -2,6 +2,7 @@ Very simple example of a slider with some text beside it.
 
 ![example of the text with slider component](/assets/text-with-slider/text-with-slider.png)
 
+#### HTML
 ```html
 <div class="text_with_slider_wrapper">
     <div class="text_wrapper">
@@ -31,10 +32,12 @@ Very simple example of a slider with some text beside it.
 </div>
 ```
 
+#### JS
 ```js
 // Some code to initialise it...
 ```
 
+#### CSS
 ```css
 .text_with_slider_wrapper {
     display: flex;
