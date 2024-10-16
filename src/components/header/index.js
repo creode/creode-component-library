@@ -11,6 +11,8 @@ export default class Header {
 			this.setMenuState();
 			this.setFocusableMenuItems();
 			this.setMenuEventListeners();
+			this.initSubMenus();
+			this.elements.menu.section.show();
 		}
 	}
 
@@ -86,6 +88,93 @@ export default class Header {
 				this.menuExpanded = false;
 				this.setMenuState();
 				this.setFocusableMenuItems();
+			}
+		);
+	}
+
+	initSubMenus() {
+		this.hideSubMenus();
+		this.addSubMenuToggles();
+		this.setSubMenuToggleEventListener();
+		this.setSubMenuHoverEventListener();
+	}
+
+	hideSubMenus() {
+		this.elements.menu.inner.children('ul').children('li').children('ul').prop('hidden', true);
+	}
+
+	addSubMenuToggles() {
+		let topLevelLinks = this.elements.menu.inner.children('ul').children('li').children('a');
+
+		topLevelLinks.each(
+			(index) => {
+				let topLevelLink = topLevelLinks.eq(index);
+
+				if(!topLevelLink.next('ul').length) {
+					return true;
+				}
+
+				jQuery('<button type="button" role="switch" aria-checked="false" class="header__sub-menu-toggle" title="Toggle Sub-menu">Toggle</button>').insertAfter(topLevelLink);
+			}
+		);
+	}
+
+	setSubMenuToggleEventListener() {
+		jQuery('.header__sub-menu-toggle').on(
+			'click',
+			(event) => {
+				let toggle = jQuery(event.currentTarget);
+				let state = toggle.attr('aria-checked') == 'true';
+
+				state = ! state;
+				toggle.next('ul').prop('hidden', !state);
+
+				toggle.attr('aria-checked', state ? 'true' : 'false');
+			}
+		);
+	}
+
+	setSubMenuHoverEventListener() {
+		let items = this.elements.menu.inner.children('ul').children('li');
+		let links = items.children('a');
+
+		links.on(
+			'mouseover',
+			(event) => {
+				if (!this.isDesktopScreen()) {
+					return;
+				}
+
+				let link = jQuery(event.currentTarget);
+				let toggle = link.next('.header__sub-menu-toggle');
+
+				if(!toggle.length) {
+					return;
+				}
+
+				toggle.attr('aria-checked', true);
+				toggle.next('ul').prop('hidden', false);
+				link.attr('data-active', '');
+			}
+		);
+		items.on(
+			'mouseleave',
+			(event) => {
+				if (!this.isDesktopScreen()) {
+					return;
+				}
+
+				let item = jQuery(event.currentTarget);
+				let link = item.children('a');
+				let toggle = link.next('.header__sub-menu-toggle');
+
+				if(!toggle.length) {
+					return;
+				}
+
+				toggle.attr('aria-checked', false);
+				toggle.next('ul').prop('hidden', true);
+				link.removeAttr('data-active');
 			}
 		);
 	}

@@ -46,7 +46,7 @@
 	}
 }
 
-@mixin render() {
+@mixin render {
 	.header__wrapper {
 		padding: 0 $space-horizontal;
 		background-color: $background-color;
@@ -231,7 +231,117 @@
 				padding: 0 calc($space-horizontal * 0.5) $space-vertical;
 
 				.header__section--menu:not(.header__section--desktop-menu) & {
+					display: flex;
+					flex-wrap: wrap;
 					width: 100%;
+				}
+
+				& > a {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+@mixin dropdown_menu {
+	.header__section--desktop-menu .header__menu-inner {
+		& > ul {
+			& > li {
+				& > a {
+					position: relative;
+
+					&[data-active] {
+						&::before {
+							content: '';
+							display: block;
+							position: absolute;
+							top: 100%;
+							left: 0;
+							width: 100%;
+							height: 100px;
+						}
+					}
+				} 
+
+				& > ul {
+					position: absolute;
+					top: 100%;
+					z-index: 10;
+					margin: 0;
+					padding: $space-vertical $space-horizontal 0;
+					list-style-type: none;
+					background-color: $background-color;
+
+					& > li {
+						margin: 0;
+						padding: 0 0 $space-vertical;
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin menu_toggles {
+	.header__sub-menu-toggle {
+		display: block;
+		position: relative;
+		width: 40px;
+		height: 40px;
+		overflow: hidden;
+		background-color: transparent;
+		border: none;
+		font-size: 0;
+		white-space: nowrap;
+		text-indent: 100px;
+		cursor: pointer;
+
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 45%;
+			left: 50%;
+			width: 10px;
+			height: 10px;
+			border-style: solid;
+			border-width: 0 2px 2px 0;
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		&[aria-checked="true"] {
+			&::before {
+				top: 55%;
+				transform: translate(-50%, -50%) rotate(225deg);
+			}
+		}
+	}
+
+	.header__section--desktop-menu .header__sub-menu-toggle {
+		display: none;
+	}
+
+	.header__section--menu:not(.header__section--desktop-menu) .header__menu-inner {
+		& > ul {
+			& > li {
+				& > a {
+					display: flex;
+					align-items: center;
+					width: calc(100% - 40px);
+				}
+
+				& > ul {
+					flex-grow: 1;
+					margin: 0 calc($space-horizontal * -1);
+					padding: $space-vertical $space-horizontal 0;
+					list-style-type: none;
+					background-color: rgba(0, 0, 0, 0.3);
+
+					& > li {
+						margin: 0;
+						padding: 0 0 $space-vertical;
+					}
 				}
 			}
 		}
