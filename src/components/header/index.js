@@ -4,7 +4,7 @@ export default class Header {
 	elements = {};
 	
 	constructor(wrapper, breakpoint = '760px') {
-    this.breakpoint = breakpoint;
+		this.breakpoint = breakpoint;
 		this.loadElements(wrapper);
 		if(this.elements.menu.section.length) {
 			this.setDefaultMenuExpandedValue();
@@ -27,7 +27,7 @@ export default class Header {
 	}
 
 	isDesktopScreen() {
-		return window.matchMedia("(max-width: " + this.breakpoint).matches;
+		return window.matchMedia("(min-width: " + this.breakpoint).matches;
 	}
 
 	setDefaultMenuExpandedValue() {
