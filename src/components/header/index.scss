@@ -1,5 +1,12 @@
 @use '../globals.scss';
 
+$maximum-width: globals.$maximum-width;
+$space-vertical: globals.$space-vertical;
+$space-horizontal: globals.$space-horizontal;
+$background-color: white;
+$logo-width: 200px;
+$use-menu-button-icons: true;
+
 @mixin configure(
 	$maximum-width: null,
 	$space-vertical: null,
@@ -11,38 +18,26 @@
 
 	@if $maximum-width {
 		$maximum-width: $maximum-width !global;
-	} @else {
-		$maximum-width: globals.$maximum-width !global;
 	}
 
 	@if $space-vertical {
 		$space-vertical: $space-vertical !global;
-	} @else {
-		$space-vertical: globals.$space-vertical !global;
 	}
 
 	@if $space-horizontal {
 		$space-horizontal: $space-horizontal !global;
-	} @else {
-		$space-horizontal: globals.$space-horizontal !global;
 	}
 
 	@if $background-color {
 		$background-color: $background-color !global;
-	} @else {
-		$background-color: white !global;
 	}
 
 	@if $logo-width {
 		$logo-width: $logo-width !global;
-	} @else {
-		$logo-width: 200px !global;
 	}
 
 	@if $use-menu-button-icons {
 		$use-menu-button-icons: $use-menu-button-icons !global;
-	} @else {
-		$use-menu-button-icons: true !global;
 	}
 }
 
