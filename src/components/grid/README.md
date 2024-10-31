@@ -1,0 +1,1 @@
+This component offers the ScSS for a basic grid component.
