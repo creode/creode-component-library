@@ -1,19 +1,18 @@
 @use '../globals.scss';
 
+$overlay-background: rgba(0, 0, 0, 0.5);
+$overlay-z-index: 10;
+
 @mixin configure(
     $overlay-background: null,
     $overlay-z-index: null,
 ) {
     @if $overlay-background {
         $overlay-background: $overlay-background !global;
-    } @else {
-        $overlay-background: rgba(0, 0, 0, 0.5) !global;
     }
 
     @if $overlay-z-index {
         $overlay-z-index: $overlay-z-index !global;
-    } @else {
-        $overlay-z-index: 10 !global;
     }
 }
 

@@ -1,5 +1,8 @@
 @use '../globals.scss';
 
+$space-vertical: globals.$space-vertical;
+$internal-vertical-space-proportion: 0.5;
+
 @mixin configure(
 	$space-vertical: null,
 	$internal-vertical-space-proportion: null,
@@ -7,14 +10,10 @@
 
 	@if $space-vertical {
 		$space-vertical: $space-vertical !global;
-	} @else {
-		$space-vertical: globals.$space-vertical !global;
 	}
 
 	@if $internal-vertical-space-proportion {
 		$internal-vertical-space-proportion: $internal-vertical-space-proportion !global;
-	} @else {
-		$internal-vertical-space-proportion: 0.5 !global;
 	}
 
 }
