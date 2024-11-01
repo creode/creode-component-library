@@ -26,7 +26,7 @@ $internal-vertical-space-proportion: 0.5;
 
 	.accordion__item {
 		padding-top: $space-vertical;
-		padding-bottom: $space-vertical - ($space-vertical * $internal-vertical-space-proportion);
+		padding-bottom: calc($space-vertical - ($space-vertical * $internal-vertical-space-proportion));
 	}
 
 	.accordion__item-header {
