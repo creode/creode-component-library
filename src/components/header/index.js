@@ -139,7 +139,7 @@ export default class Header {
 		let links = items.children('a');
 
 		links.on(
-			'mouseover',
+			'mouseover focus',
 			(event) => {
 				if (!this.isDesktopScreen()) {
 					return;
@@ -158,13 +158,21 @@ export default class Header {
 			}
 		);
 		items.on(
-			'mouseleave',
-			(event) => {
+			'mouseleave focusout',
+			async (event) => {
 				if (!this.isDesktopScreen()) {
 					return;
 				}
 
 				let item = jQuery(event.currentTarget);
+
+				// Delay until next element recieves focus.
+				await new Promise((resolve) => { requestAnimationFrame(resolve); });
+
+				if (item.find('*:focus').length) {
+					return;
+				}
+
 				let link = item.children('a');
 				let toggle = link.next('.header__sub-menu-toggle');
 
