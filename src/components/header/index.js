@@ -120,7 +120,7 @@ export default class Header {
 	}
 
 	setSubMenuToggleEventListener() {
-		jQuery('.header__sub-menu-toggle').on(
+		this.elements.wrapper.find('.header__sub-menu-toggle').on(
 			'click',
 			(event) => {
 				let toggle = jQuery(event.currentTarget);
@@ -128,8 +128,12 @@ export default class Header {
 
 				state = ! state;
 				toggle.next('ul').prop('hidden', !state);
-
 				toggle.attr('aria-checked', state ? 'true' : 'false');
+
+				let otherToggles = this.elements.wrapper.find('.header__sub-menu-toggle').not(toggle);
+
+				otherToggles.next('ul').prop('hidden', true);
+				otherToggles.attr('aria-checked', 'false');
 			}
 		);
 	}
