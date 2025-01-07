@@ -152,7 +152,7 @@ export default class Header {
 				let link = jQuery(event.currentTarget);
 				let toggle = link.next('.header__sub-menu-toggle');
 
-				if(!toggle.length) {
+				if (!toggle.length) {
 					return;
 				}
 
@@ -161,8 +161,44 @@ export default class Header {
 				link.attr('data-active', '');
 			}
 		);
+	
+		links.on(
+			'click',
+			(event) => {
+				if (!this.isDesktopScreen()) {
+					return;
+				}
+	
+				let link = jQuery(event.currentTarget);
+				link.attr('data-clicked', 'true');
+			}
+		);
+	
 		items.on(
-			'mouseleave focusout',
+			'mouseleave',
+			(event) => {
+				if (!this.isDesktopScreen()) {
+					return;
+				}
+	
+				let item = jQuery(event.currentTarget);
+				let link = item.children('a');
+				let toggle = link.next('.header__sub-menu-toggle');
+	
+				if (!toggle.length) {
+					return;
+				}
+	
+				// Always hide submenu when mouse leaves
+				toggle.attr('aria-checked', false);
+				toggle.next('ul').prop('hidden', true);
+				link.removeAttr('data-active');
+				link.removeAttr('data-clicked');
+			}
+		);
+	
+		items.on(
+			'focusout',
 			async (event) => {
 				if (!this.isDesktopScreen()) {
 					return;
@@ -180,13 +216,14 @@ export default class Header {
 				let link = item.children('a');
 				let toggle = link.next('.header__sub-menu-toggle');
 
-				if(!toggle.length) {
+				if (!toggle.length) {
 					return;
 				}
 
 				toggle.attr('aria-checked', false);
 				toggle.next('ul').prop('hidden', true);
 				link.removeAttr('data-active');
+				link.removeAttr('data-clicked');
 			}
 		);
 	}
