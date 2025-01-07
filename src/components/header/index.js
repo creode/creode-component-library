@@ -162,18 +162,6 @@ export default class Header {
 			}
 		);
 	
-		links.on(
-			'click',
-			(event) => {
-				if (!this.isDesktopScreen()) {
-					return;
-				}
-	
-				let link = jQuery(event.currentTarget);
-				link.attr('data-clicked', 'true');
-			}
-		);
-	
 		items.on(
 			'mouseleave',
 			(event) => {
@@ -193,7 +181,6 @@ export default class Header {
 				toggle.attr('aria-checked', false);
 				toggle.next('ul').prop('hidden', true);
 				link.removeAttr('data-active');
-				link.removeAttr('data-clicked');
 			}
 		);
 	
@@ -223,7 +210,6 @@ export default class Header {
 				toggle.attr('aria-checked', false);
 				toggle.next('ul').prop('hidden', true);
 				link.removeAttr('data-active');
-				link.removeAttr('data-clicked');
 			}
 		);
 	}
