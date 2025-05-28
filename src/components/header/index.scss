@@ -1,5 +1,12 @@
 @use '../globals.scss';
 
+$maximum-width: null;
+$space-vertical: null;
+$space-horizontal: null;
+$background-color: null;
+$logo-width: null;
+$use-menu-button-icons: null;
+
 @mixin configure(
 	$maximum-width: null,
 	$space-vertical: null,

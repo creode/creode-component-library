@@ -1,5 +1,12 @@
 @use '../globals.scss';
 
+
+$space-vertical: null;
+$internal-vertical-space-proportion: null;
+$space-horizontal: null;
+$image-aspect-ratio: null;
+$background-color: null;
+
 /// @param number $space-vertical - The standard vertical spacing of elements. Ususally supplied in rem or em units.
 /// @param number $internal-vertical-space-proportion - A non-unit-specific number representing the proportion of standard vertical spacing to be used between internal elements. 0 represents no spaceing, 1 represtents standard vertical spacing and 2 respesents double vertical spacing. Any decimal number is allowed.
 /// @param number $space-horizontal - The standard vertical horizontal of elements. Usually supplied in pixels.

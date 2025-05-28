@@ -1,5 +1,10 @@
 @use '../globals.scss';
 
+$space-vertical: null;
+$internal-vertical-space-proportion: null;
+$image-minumum-height: null;
+$image-minumum-aspect-ratio: null;
+
 @mixin configure(
 	$space-vertical: null,
 	$internal-vertical-space-proportion: null,

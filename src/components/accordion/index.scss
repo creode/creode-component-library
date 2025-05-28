@@ -1,5 +1,8 @@
 @use '../globals.scss';
 
+$space-vertical: null;
+$internal-vertical-space-proportion: null;
+
 @mixin configure(
 	$space-vertical: null,
 	$internal-vertical-space-proportion: null,

@@ -1,5 +1,8 @@
 @use '../globals.scss';
 
+$overlay-background: null;
+$overlay-z-index: null;
+
 @mixin configure(
     $overlay-background: null,
     $overlay-z-index: null,

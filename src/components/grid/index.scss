@@ -1,5 +1,16 @@
 @use '../globals.scss';
 
+$maximum-width: null;
+$vertical-outer-space: null;
+$vertical-gutter: null;
+$horizontal-gutter: null;
+$breakpoint-medium: null;
+$breakpoint-medium-items-per-row: null;
+$breakpoint-medium-vertical-outer-space: null;
+$breakpoint-large: null;
+$breakpoint-large-items-per-row: null;
+$breakpoint-large-vertical-outer-space: null;
+
 /// @param number $maximum-width - The maximum width of the grid. Please note this is not the width of the outer wrapper.
 /// @param number $vertical-outer-space - Additional space to be added to the top and bottom of the component.
 /// @param number $vertical-gutter - The vertical space between grid items.
